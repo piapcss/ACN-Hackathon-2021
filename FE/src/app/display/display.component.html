@@ -1,0 +1,355 @@
+<div class="container">
+  <br>
+  <h2 class="text-left">Carbon Footprint Calculator</h2>
+  <hr>
+  <app-form></app-form>
+</div>
+
+<div class="container">
+  <!-- Failed URL Section -->
+  <div class="alert alert-danger message text-center" *ngIf="errorMessage && !isLoading && !sizeInKiB" role="alert">
+    <p>{{errorMessage}}</p>
+  </div>
+  <!-- End of Failed URL Section -->
+
+  <!-- Page Exceeds Section -->
+  <div class="alert alert-danger" *ngIf="sizeInKiB > 5120 && !isLoading" role="alert">
+    <h5 class="text-center" style="color: black;">Your page exceeds. Visit
+      <a
+        href="https://www.accenture.com/us-en/insights/strategy/green-behind-cloud?c=acn_glb_sustainabilitymediarelations_11307639&n=mrl_0920">
+        GreenIT</a>
+      site to learn more.
+    </h5>
+  </div>
+  <!-- End of Page Exceeds Section -->
+</div>
+
+
+<!-- Welcome Message -->
+<div class="container">
+  <div class="welcome" *ngIf="welcomeMessage">
+    <p>What is your website Carbon Footprint?</p>
+    <h5>What is a carbon footprint? <br><br>
+      A carbon footprint is basically the total amount of greenhouse gas emissions that anything -- a person,
+      organization, event or product -- has produced. Greenhouse gases are the gases in the atmosphere that produce the
+      "greenhouse effect" and contribute to global warming and climate change.</h5>
+  </div>
+</div>
+<!-- End of Welcome Message -->
+
+<br>
+
+<!-- Load Spinner Section -->
+<div class="container">
+  <div class="row" *ngIf="isLoading" class="reports">
+    <p><span id="spin"></span></p>
+    <br>
+    <div class="spinner-border text-light spinner-border-sm" style="color: white;" role="status">
+    </div>
+    <h2 class="loading">We're loading your results...</h2>
+  </div>
+</div>
+<!-- End of Load Spinner Section -->
+
+<div class="container">
+  <div *ngIf="!isLoading && !welcomeMessage && !errorMessage">
+    <div class="row">
+      <div class="col">
+        <h6 style="color: white;"></h6>
+        <h4 style="font-size: 30px;">Carbon footprint result for <a style="color: #ffc107; text-decoration: underline;"
+            href="{{ urlLink }}">{{
+            urlLink
+            }}</a> <br> per website view</h4>
+        <h1 style="font-size: 100px;"><span style="color: #ffc107;">{{GHG}}</span> g CO<sub>2</sub></h1>
+      </div>
+
+      <div class="col">
+        <div class="details">
+          <div class="card rounded-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-8">
+                  <h3>Time it takes for the website to become fully interactive</h3>
+                </div>
+                <div class="col-4">
+                  <h2 style="font-size: 30px;"><span *ngIf="data">
+                      <p style="color: red;" *ngIf="data.time > 7.3"><b>{{data?.time}} seconds</b></p>
+                      <p style="color: orange;" *ngIf="data.time >=3.9 && data.time <= 7.3"><b>{{data?.time}}
+                          seconds</b></p>
+                      <p style="color: green;" *ngIf="data.time >=0 && data.time <= 3.8"><b>{{data?.time}} seconds</b>
+                      </p>
+                    </span>
+                  </h2>
+                </div>
+              </div>
+              <p>Guide Metrics</p>
+              <div class="card">
+                <div style="text-align:center">
+                  <p class="metrics"> <span class="dot dot-red"></span> over 7.3 </p>
+                  <p class="metrics"> <span class="dot dot-orange"></span> 3.9 - 7.3 </p>
+                  <p class="metrics green"> <span class="dot dot-green"></span> 0 - 3.8 </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+            *ngIf="sizeInKiB > 5120 && !isLoading">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Take Action
+              </mat-panel-title>
+              <mat-panel-description>
+                For Developers
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <br>
+            <h5>To speed up your website:</h5>
+            <hr>
+            <p>• Minimize HTTP Requests</p>
+            <p>• Minify and combine files</p>
+            <p>• Use asynchronous loading for CSS and JavaScript files</p>
+            <p>• Defer JavaScript loading</p>
+            <p>• Minimize time to first byte</p>
+          </mat-expansion-panel>
+        </div>
+
+
+        <div class="details">
+          <div class="card rounded-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-8">
+                  <h3>Total size or page weight of the website in kB</h3>
+                </div>
+                <div class="col-4">
+                  <h2 style="font-size: 30px;">
+                    <span *ngIf="data" class="result">
+                      <p style="color: red;" *ngIf="sizeInKiB > 1900"><b>{{data?.size}} kB</b></p>
+                      <p style="color: orange;" *ngIf="sizeInKiB >=1700 && sizeInKiB <= 1900"><b>{{data?.size}} kB</b>
+                      </p>
+                      <p style="color: green;" *ngIf="sizeInKiB < 1700"><b>{{data?.size}} kB</b></p>
+                    </span>
+                  </h2>
+                </div>
+              </div>
+              <p>Guide Metrics</p>
+              <div class="card">
+                <div style="text-align:center">
+                  <p class="metrics sizeInKb"> <span class="dot dot-red"></span> over 1945.6 </p>
+                  <p class="metrics"> <span class="dot dot-orange"></span> 1740.8 - 1945.6 </p>
+                  <p class="metrics green"> <span class="dot dot-green"></span> less than 1740.8 </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+            *ngIf="sizeInKiB > 5000 && !isLoading">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Take Action
+              </mat-panel-title>
+              <mat-panel-description>
+                For Developers
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <br>
+            <h5>To reduce the size of your website:</h5>
+            <hr>
+            <p>• Upload images at scale instead of relying on CSS to resize them.</p>
+            <p>• Compress files, images and videos to reduce file sizes without visible loss of quality.</p>
+            <p>• Minimize custom fonts, which can actually add up to a large proportion of overall page size.</p>
+            <p>• Use vector graphics and CSS effects to create a visually engaging experience with much smaller files
+              (than traditional images such as JPEGS and GIFS)</p>
+            <p>• Implement a cache solution.</p>
+          </mat-expansion-panel>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br><br>
+
+
+<div class="container">
+  <div class="comparison" id="comparison" *ngIf="!isLoading && !welcomeMessage && !errorMessage">
+    <h2 style="color: white;">
+      The website, <br>
+      <a style="color: white; text-decoration: underline;" href="{{ urlLink }}">{{
+        urlLink
+        }}</a>'s carbon emission can be compared to:
+    </h2>
+    <br>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card rounded-0">
+          <div class="card-body">
+            <h5>For every person who will access the website, the computed carbon emission is equivalent to the total
+              cabon emission caused by <span style="color:#ffc107; font-size: 30px;">{{plastic}} plastic bags</span>.
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card rounded-0">
+          <div class="card-body">
+            <h5>For every person who will access the website, the computed carbon emission is equivalent to the total
+              carbon emission of charging <span style="color:#ffc107; font-size: 30px;">{{phone}} smartphones</span>.
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card rounded-0">
+          <div class="card-body">
+            <h5>For every person who will access your website, the carbon emission is equivalent to the carbon emission
+              of a car if it travelled <span style="color:#ffc107; font-size: 30px;">{{car}} miles</span>.</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card rounded-0">
+          <div class="card-body">
+            <h5>If 500,000 people accessed the website, the computed carbon emission is equivalent to the total carbon emission of <span
+              style="color:#ffc107; font-size: 30px;">{{person}}
+              people </span> in US per year.</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card rounded-0">
+          <div class="card-body">
+            <h5>If 500,000 people accessed the website, it would take <span
+              style="color:#ffc107; font-size: 30px;">{{trees}}
+              trees</span> a whole year to absorb the computed carbon emission of the site.</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br><br><br><br>
+
+
+<div class="container" *ngIf="!isLoading && !welcomeMessage && !errorMessage">
+  <hr><br>
+  <h2 style="color: white;">Measuring our individual impact isn’t easy, but you can take steps to reduce it. Here are
+    couple of things you can do:</h2><br>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card rounded-0">
+        <div class="card-body">
+          <h3 style="color:#ffc107;">Adjust power settings</h3>
+          <p>Set your computer to go into sleep or hibernate to conserve energy when you’re taking a break. Shutting
+            down
+            your computer and turning off your monitor and printer altogether when they’re not in use will save even
+            more.
+          </p>
+          <a style="font-size: 15px; text-decoration: none; color: black"
+            href="https://www.accenture.com/us-en/insights/strategy/green-behind-cloud?c=acn_glb_sustainabilitymediarelations_11307639&n=mrl_0920">
+            Find out more >
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card rounded-0">
+        <div class="card-body">
+          <h3 style="color:#ffc107;">Lower your monitor brightness</h3>
+          <p>A tip from Harvard Law School’s energy manager suggests that dimming your monitor from 100% to 70% can save
+            up
+            to 20% of the energy the monitor uses. Plus, lowering brightness reduces eye strain.</p>
+          <a style="font-size: 15px; text-decoration: none; color: black"
+            href="https://www.accenture.com/us-en/insights/strategy/green-behind-cloud?c=acn_glb_sustainabilitymediarelations_11307639&n=mrl_0920">
+            Find out more >
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card rounded-0">
+        <div class="card-body">
+          <h3 style="color:#ffc107;">Download instead of stream</h3>
+          <p>Streaming music and videos adds to your digital carbon footprint, according to at least one researcher.
+            Opting
+            to download rather than stream means you’ll pull the data from the server only once. Some streaming services
+            do
+            a better job of mitigating their impact than others, according to the Click Clean Report from Greenpeace.
+          </p>
+          <a style="font-size: 15px; text-decoration: none; color: black"
+            href="https://www.accenture.com/us-en/insights/strategy/green-behind-cloud?c=acn_glb_sustainabilitymediarelations_11307639&n=mrl_0920">
+            Find out more >
+          </a>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-sm-6">
+      <div class="card rounded-0">
+        <div class="card-body">
+          <h3 style="color:#ffc107;"> Reuse your searches</h3>
+          <p>It turns out that a good deal of search queries — the things you type into a search engine — are
+            navigational,
+            meaning you’re not necessarily looking to find something so much as you are looking to go somewhere that
+            you’ve
+            already been. An example would be that you search for twitter.com to go to your Twitter feed.</p>
+          <a style="font-size: 15px; text-decoration: none; color: black"
+            href="https://www.accenture.com/us-en/insights/strategy/green-behind-cloud?c=acn_glb_sustainabilitymediarelations_11307639&n=mrl_0920">
+            Find out more >
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card rounded-0">
+        <div class="card-body">
+          <h3 style="color:#ffc107;">Block video autoplay</h3>
+          <p>Playing videos uses more energy, so why not nip it in the bud by stopping videos you don’t necessarily even
+            want to watch from playing in the first place. The latest Firefox blocks videos with sound from autoplaying
+            by
+            default.</p>
+          <a style="font-size: 15px; text-decoration: none; color: black"
+            href="https://www.accenture.com/us-en/insights/strategy/green-behind-cloud?c=acn_glb_sustainabilitymediarelations_11307639&n=mrl_0920">
+            Find out more >
+          </a>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-sm-6">
+      <div class="card rounded-0">
+        <div class="card-body">
+          <h3 style="color:#ffc107;">Get bored</h3>
+          <p>That’s right. Instead of turning to your phone every time you have a minute, daydream, people-watch or
+            listen
+            to life happening around you instead. Not only will you do a good deed for the environment (albeit a tiny
+            one),
+            you’ll do a good deed for your brain. You might find a bit of brilliance in your boredom.</p>
+          <a style="font-size: 15px; text-decoration: none; color: black"
+            href="https://www.accenture.com/us-en/insights/strategy/green-behind-cloud?c=acn_glb_sustainabilitymediarelations_11307639&n=mrl_0920">
+            Find out more >
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br><br>
+
+  <hr><br>
+  <h2>Try reducing the page weight, see what happens!</h2><br>
+  <a routerLink="calculator"><button class="btn btn-lg btn-warning" style="color: white;">See our
+      calculator</button></a>
+
+</div>
+
+
+<br><br><br>

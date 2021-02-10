@@ -1,0 +1,17 @@
+<div class="form-class">
+  <div class="container">
+    <form id="form" #linkForm="ngForm" (ngSubmit)="generate(linkForm)">
+      <div class="row">
+        <div class="col">
+          <input type="text" id="link" class="form-control" placeholder="Your web page address.." name="link"
+            [(ngModel)]="link" #inputControl="ngModel" ngModel>
+        </div>
+        <div class="col">
+          <button class="btn btn-warning" style="color: white;" id="genReportBtn" type="submit" click="onReset()">
+            Calculate
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

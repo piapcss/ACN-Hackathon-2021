@@ -1,0 +1,16 @@
+
+
+
+.container{
+  margin-bottom: 2rem;
+}
+
+.welcome h2 {
+  margin-top: 1rem;
+  color: white;
+  font-size: 27px;
+}
+
+hr {
+  background-color: white;
+}

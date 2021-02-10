@@ -1,0 +1,21 @@
+pipeline{
+    agent any
+    stages{
+        stage('Build'){
+            steps{
+                bat 'npm install'
+            }
+        }
+        stage('Unit Test'){
+            steps{
+                bat 'npm run test'
+            }
+        }
+        stage('Deploy'){
+             steps{
+                 bat 'node lighthouse.js || true'
+             }
+        }
+
+    }
+}

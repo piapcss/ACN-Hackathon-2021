@@ -1,0 +1,140 @@
+<div class="container welcome">
+  <br>
+  <h2 class="text-left">Carbon Footprint Calculator</h2>
+  <hr>
+</div>
+
+<div *ngIf="!isLoading">
+  <div class="container">
+    <form #calcForm="ngForm" (ngSubmit)="onCalculate(calcForm)">
+
+      <div class="row">
+        <h2 style="color: white; margin-left: 1rem; margin-bottom: 1rem;">Try reducing the page weight, and see what
+          happens</h2>
+      </div>
+
+      <div class="row">
+        <div class="col col-md-6">
+          <input type="text" name="reducedSize" class="form-control" placeholder="Enter reduced amount of Page Weight"
+            #reducedSizeControl="ngModel" ngModel>
+        </div>
+
+        <div class="col-xs-6">
+          <button class="btn btn-warning" style="color: white;" type="submit">
+            Calculate
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <br><br>
+    <div *ngIf="!isGenerate && reducedGHG">
+      <h3 style="color: white;">Carbon results</h3>
+      <h1 style="font-size: 100px; color: white;" class="text-left"><span style="color: #ffc107;">{{reducedGHG}}</span>
+        g CO<sub>2</sub></h1>
+    </div>
+  </div>
+
+  <br><br>
+  <div class="container">
+    <div class="comparison" id="comparison" *ngIf="reducedGHG && !isGenerate">
+      <h2 style="color: white;" class="text-left">
+        Your page size carbon emission can be compared to:
+      </h2>
+      <br>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card rounded-0">
+            <div class="card-body">
+              <h5>For every person who will access your website, the carbon emission of your website is equivalent to
+                the cabon emission caused by <span style="color:#ffc107; font-size: 30px;">{{plastic}} plastic
+                  bags</span>.</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card rounded-0">
+            <div class="card-body">
+              <h5>For every person who will access your website, the carbon emission of your website is equivalent to
+                the carbon emission of charging <span style="color:#ffc107; font-size: 30px;">{{phone}}
+                  smartphones</span>.</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card rounded-0">
+            <div class="card-body">
+              <h5>For every person who will access your website, the carbon emission is equivalent to the carbon
+                emission of a car if it travelled <span style="color:#ffc107; font-size: 30px;">{{car}} miles</span>.
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card rounded-0">
+            <div class="card-body">
+              <h5>If 500,000 people accessed your website, the carbon emission is equivalent to carbon emission of <span
+                style="color:#ffc107; font-size: 30px;">{{person}}
+                people </span> in US per year</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card rounded-0">
+            <div class="card-body">
+              <h5>If 500,000 people accessed your website, it would take <span
+                style="color:#ffc107; font-size: 30px;">{{tree}}
+                trees</span> a whole year to absorb the carbon emission of your website</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br><br><br>
+  <div class="container" *ngIf="!isGenerate && reducedGHG"><hr><br>
+    <h2 style="color: white;">Test another web page.</h2><br>
+    <a routerLink=""><button class="btn btn-lg btn-warning" style="color: white;">Test another page</button></a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

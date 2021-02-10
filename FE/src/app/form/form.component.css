@@ -1,0 +1,17 @@
+.form-class {
+  height: 10.20vh;
+}
+
+input, button {
+  margin-top: 0.5rem;
+  margin-left: 10rem;
+}
+
+.header {
+  background-color: white;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  padding-left: 1rem;
+}
+
+
